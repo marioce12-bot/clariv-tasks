@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, limit, onSnapshot, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "./firebase";
 import { entryId, nextScheduledDate } from "./date";
 import type { GeneratedPost, UserConfig } from "./types";
@@ -47,11 +47,15 @@ export async function updatePost(postId: string, payload: Partial<GeneratedPost>
 }
 
 export function subscribeUserPosts(uid: string, callback: (posts: Array<GeneratedPost & { id: string }>) => void, onError?: (error: Error) => void) {
-  const q = query(collection(db, "posts"), where("uid", "==", uid), orderBy("createdAt", "desc"), limit(20));
+  const q = query(collection(db, "posts"), where("uid", "==", uid), limit(20));
   return onSnapshot(
     q,
     (snapshot) => {
-      callback(snapshot.docs.map((item) => ({ id: item.id, ...(item.data() as GeneratedPost) })));
+      const posts = snapshot.docs
+        .map((item) => ({ id: item.id, ...(item.data() as GeneratedPost) }))
+        .sort((a, b) => (b.createdAt?.toMillis?.() ?? 0) - (a.createdAt?.toMillis?.() ?? 0));
+
+      callback(posts);
     },
     (error) => {
       onError?.(error);
