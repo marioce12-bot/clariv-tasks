@@ -46,11 +46,17 @@ export async function updatePost(postId: string, payload: Partial<GeneratedPost>
   await updateDoc(doc(db, "posts", postId), payload);
 }
 
-export function subscribeUserPosts(uid: string, callback: (posts: Array<GeneratedPost & { id: string }>) => void) {
+export function subscribeUserPosts(uid: string, callback: (posts: Array<GeneratedPost & { id: string }>) => void, onError?: (error: Error) => void) {
   const q = query(collection(db, "posts"), where("uid", "==", uid), orderBy("createdAt", "desc"), limit(20));
-  return onSnapshot(q, (snapshot) => {
-    callback(snapshot.docs.map((item) => ({ id: item.id, ...(item.data() as GeneratedPost) })));
-  });
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      callback(snapshot.docs.map((item) => ({ id: item.id, ...(item.data() as GeneratedPost) })));
+    },
+    (error) => {
+      onError?.(error);
+    }
+  );
 }
 
 export function subscribePost(postId: string, callback: (post: (GeneratedPost & { id: string }) | null) => void) {
