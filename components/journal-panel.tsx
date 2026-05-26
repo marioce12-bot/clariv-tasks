@@ -35,7 +35,7 @@ export function JournalPanel({ uid, config }: { uid: string; config: UserConfig 
       <span className="badge"><PenLine size={14} /> Journal quotidien</span>
       <h1 style={{ marginBottom: 8 }}>Raconte ta journée</h1>
       <p className="muted" style={{ lineHeight: 1.6 }}>
-        Le texte est sauvegardé dans `journal_entries/{uid}_{date}` puis transmis au générateur de post.
+        Le texte est sauvegardé dans Firestore avec un identifiant composé de ton utilisateur et de la date, puis transmis au générateur de post.
       </p>
       <textarea className="textarea" value={text} onChange={(event) => setText(event.target.value)} placeholder="Ce que j'ai vécu, appris, observé, ressenti aujourd'hui..." />
       <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 14 }}>
