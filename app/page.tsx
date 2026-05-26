@@ -13,7 +13,7 @@ export default function HomePage() {
     <main className="shell" style={{ padding: "48px 0" }}>
       <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>
         <strong style={{ fontSize: 20 }}>Clariv-Tasks</strong>
-        <Link className="btn" href="/dashboard">Ouvrir l'app</Link>
+        <Link className="btn" href="/dashboard">Ouvrir l&apos;app</Link>
       </nav>
 
       <section className="glass" style={{ marginTop: 52, borderRadius: 36, padding: "56px min(7vw, 72px)" }}>

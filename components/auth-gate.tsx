@@ -28,7 +28,7 @@ export function AuthGate({ children }: { children: (user: User) => React.ReactNo
           <span className="badge">Connexion requise</span>
           <h1 style={{ fontSize: 42, lineHeight: 1, marginBottom: 12 }}>Pilote tes publications Facebook depuis ton journal.</h1>
           <p className="muted" style={{ lineHeight: 1.7 }}>
-            Connecte-toi avec Google pour activer Firestore, l'onboarding pseudo, les brouillons IA, les notifications et la planification.
+            Connecte-toi avec Google pour activer Firestore, l&apos;onboarding pseudo, les brouillons IA, les notifications et la planification.
           </p>
           <button className="btn primary" onClick={() => signInWithPopup(auth, googleProvider)} style={{ marginTop: 18 }}>
             <LogIn size={18} /> Connexion Google
